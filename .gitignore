@@ -1,0 +1,90 @@
+# ===========================
+# 📦 ENTORNOS Y DEPENDENCIAS
+# ===========================
+# Virtual envs
+venv/
+.env/
+.env.bak/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Configuración de entornos
+.Python
+*.egg-info/
+*.egg
+*.eggs/
+build/
+dist/
+
+# ===========================
+# 📓 JUPYTER NOTEBOOKS
+# ===========================
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# ===========================
+# 📊 DATOS Y RESULTADOS
+# ===========================
+# Archivos grandes que no se versionan
+data/raw/
+data/processed/
+results/
+outputs/
+
+# No subir catálogos originales pesados
+*.fits
+*.csv
+*.tsv
+*.h5
+*.hdf5
+*.zip
+*.tar
+*.gz
+
+# ===========================
+# 🖼️ FIGURAS Y VISUALIZACIONES
+# ===========================
+# Solo versionar figuras finales en /paper si es necesario
+figures/
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.svg
+
+# ===========================
+# 🧰 SISTEMAS Y TEMPORALES
+# ===========================
+# macOS / Linux / Windows
+.DS_Store
+Thumbs.db
+
+# Archivos temporales de editores
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# ===========================
+# 📄 DOCUMENTOS Y COMPILACIONES
+# ===========================
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.synctex.gz
+paper/*.toc
+paper/*.bbl
+paper/*.blg
+paper/*.pdf
+
+# ===========================
+# 🔐 ARCHIVOS SENSIBLES
+# ===========================
+# Nunca subir contraseñas ni tokens
+*.env
+*.key
+*.json
