@@ -70,8 +70,6 @@ project/
 4. **Interpretación física**: Relación entre propiedades astrofísicas y estructura de red.  
 5. **Publicación**: Redacción de manuscrito para revista científica.
 
----
-
 ## 📊 Métricas y análisis planeados
 
 - **Topología global**: grado medio, clustering, modularidad.  
@@ -79,8 +77,6 @@ project/
 - **Comunidades**: algoritmos Louvain / Leiden / Infomap.  
 - **Proyecciones**: UMAP, t-SNE, visualizaciones 2D coloreadas por comunidad.  
 - **Comparaciones**: distribución de parámetros físicos entre comunidades.
-
----
 
 ## 📝 Próximos pasos
 
@@ -91,39 +87,20 @@ project/
 - [ ] Identificar comunidades y hubs  
 - [ ] Redactar manuscrito inicial
 
----
-
-## 🧭 Posible publicación
-
-Este estudio está orientado a revistas de astrofísica que aceptan enfoques estadísticos/metodológicos:
-
-- **MNRAS** — excelente balance entre física y métodos  
-- A&A — fuerte en propiedades físicas de fuentes  
-- ApJ — alto impacto si se interpreta físicamente
-
----
-
 ## 🧑‍💻 Autoría
 
-- **Autor/a:** *[Tu nombre]*  
-- **Institución:** *[Afiliación]*  
-- Contacto: *[email / ORCID]*
-
----
+- **Autor/a:** *Jose Miguel Ramirez*  
+- **Institución:** *Universidad De Concepcion*  
+- Contacto: *joramriez2020@udec.cl*
 
 ## 🪪 Licencia
 
 Este proyecto se distribuye bajo licencia MIT.  
 Ver [LICENSE](LICENSE) para más detalles.
 
----
+##  Contribuciones
 
-## ⭐ Contribuciones
-
-¡Pull requests bienvenidas!  
-Si quieres contribuir:
+¡Pull requests bienvenidas! Si quieres contribuir:
 - Abre un *issue* para sugerencias
 - Usa *branches* descriptivos
 - Documenta claramente tus cambios
-
----
