@@ -25,15 +25,6 @@ dist/
 .ipynb_checkpoints/
 *.nbconvert.ipynb
 
-# ===========================
-# 📊 DATOS Y RESULTADOS
-# ===========================
-# Archivos grandes que no se versionan
-data/raw/
-data/processed/
-results/
-outputs/
-
 # No subir catálogos originales pesados
 *.fits
 *.csv
@@ -79,7 +70,6 @@ paper/*.synctex.gz
 paper/*.toc
 paper/*.bbl
 paper/*.blg
-paper/*.pdf
 
 # ===========================
 # 🔐 ARCHIVOS SENSIBLES
