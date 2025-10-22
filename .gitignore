@@ -36,17 +36,6 @@ dist/
 *.gz
 
 # ===========================
-# 🖼️ FIGURAS Y VISUALIZACIONES
-# ===========================
-# Solo versionar figuras finales en /paper si es necesario
-figures/
-*.png
-*.jpg
-*.jpeg
-*.pdf
-*.svg
-
-# ===========================
 # 🧰 SISTEMAS Y TEMPORALES
 # ===========================
 # macOS / Linux / Windows
