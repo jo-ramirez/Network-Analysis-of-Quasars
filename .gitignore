@@ -27,7 +27,6 @@ dist/
 
 # No subir catálogos originales pesados
 *.fits
-*.csv
 *.tsv
 *.h5
 *.hdf5
