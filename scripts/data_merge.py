@@ -73,18 +73,12 @@ if __name__ == "__main__":
         "MJD"    : np.array(spec_data["MJD"]),                    # días (Modified Julian Date)
         "FIBERID": np.array(spec_data["FIBERID"]),                # adimensional
 
-        # Luminosidades de continuo
-        # "LOG_L1350": np.array(spec_data["LOG_L1350"]),            # erg s^-1 (o log erg s^-1 según el catálogo)
-        # "LOG_L3000": np.array(spec_data["LOG_L3000"]),            # erg s^-1
-        # "LOG_L5100": np.array(spec_data["LOG_L5100"]),            # erg s^-1
-
         # Anchos de línea NA (FWHM) 
         "FWHM_HA_NA": np.array(spec_data["FWHM_HA_NA"]),          # km s^-1  (línea Ha)
         "FWHM_HA_BR": np.array(spec_data["FWHM_HA_BR"]),          # km s^-1  (línea Ha)
         "FWHM_HB_NA": np.array(spec_data["FWHM_HB_NA"]),          # km s^-1  (línea Ha)
         "FWHM_HB_BR": np.array(spec_data["FWHM_HB_BR"]),          # km s^-1  (línea Ha)
         "FWHM_HG_BR": np.array(spec_data["FWHM_HG_BR"]),          # km s^-1  (línea Ha)
-
         "FWHM_MGII_NA": np.array(spec_data["FWHM_MGII_NA"]),      # km s^-1  (línea Mg II λ2798)
         "FWHM_MGII_BR": np.array(spec_data["FWHM_MGII_BR"]),      # km s^-1  (línea Mg II λ2798)
 
@@ -92,24 +86,6 @@ if __name__ == "__main__":
         "FWHM_CIV" : np.array(spec_data["FWHM_CIV"]),             # km s^-1  (línea C IV λ1549)
 
         "FWHM_LYA": np.array(spec_data["FWHM_LYA"]),              # km s^-1  (línea C IV λ1549)
-
-    #     # Equivalent widths (EW)
-    #     "EW_HB_NA"  : np.array(spec_data["EW_HB_NA"]),            # Å  (línea Hβ)
-    #     "EW_MGII": np.array(spec_data["EW_MGII"]),                # Å  (línea Mg II λ2798)
-    #     "EW_CIV" : np.array(spec_data["EW_CIV"]),                 # Å  (línea C IV λ1549)
-    #     "EW_FEII_OPT" : np.array(spec_data["EW_FEII_OPT"]),       # Å  (Fe II óptico, 4435–4685 Å)
-    #     "EW_FEII_UV"  : np.array(spec_data["EW_FEII_UV"]),        # Å  (Fe II UV, 2200–3090 Å)
-    #     "EW_OIII_5007": np.array(spec_data["EW_OIII_5007"]),      # Å  ([O III] λ5007)
-
-    #     # Flujos integrados de líneas
-    #     "FLUX_HB"  : np.array(spec_data["FLUX_HB"]),              # 1e-17 erg s^-1 cm^-2
-    #     "FLUX_MGII": np.array(spec_data["FLUX_MGII"]),            # 1e-17 erg s^-1 cm^-2
-    #     "FLUX_CIV" : np.array(spec_data["FLUX_CIV"]),             # 1e-17 erg s^-1 cm^-2
-    #     "FLUX_OIII_5007": np.array(spec_data["FLUX_OIII_5007"]),  # 1e-17 erg s^-1 cm^-2
-
-    #     # Relaciones espectrales útiles
-    #     "RFE"  : np.array(spec_data["RFE"]),                      # adimensional (EW_FeII_opt / EW_HB)
-    #     "R5007": np.array(spec_data["R5007"]),                    # adimensional (EW_[OIII]5007 / EW_HB)
     })
 
     df_phot = convert_to_little_endian(df_phot).dropna()
