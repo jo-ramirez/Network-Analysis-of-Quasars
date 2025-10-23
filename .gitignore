@@ -33,6 +33,7 @@ dist/
 *.zip
 *.tar
 *.gz
+*.csv
 
 # ===========================
 # 🧰 SISTEMAS Y TEMPORALES
