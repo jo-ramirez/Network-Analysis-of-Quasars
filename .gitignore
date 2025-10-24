@@ -35,6 +35,8 @@ dist/
 *.gz
 *.csv
 
+data/pre_processed/*.csv
+
 # ===========================
 # 🧰 SISTEMAS Y TEMPORALES
 # ===========================
