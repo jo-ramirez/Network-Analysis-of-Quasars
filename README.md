@@ -1,9 +1,9 @@
 # 🕸️ Network Analysis of Quasars — SDSS DR16Q
 
-Este proyecto explora la **estructura topológica en el espacio de parámetros físicos de cuásares** usando técnicas de análisis de redes.  
-El objetivo principal es investigar si existen **agrupamientos naturales en el espacio físico de cuásares con \( z < 2.5 \)** y buen SNR.
+Este proyecto explora la **estructura topológica en el espacio de parámetros físicos de cuásares** usando técnicas de análisis de redes, analisis de comunidades y analisis estadisticos clasicos. El objetivo principal es investigar si existen **agrupamientos naturales en comunidades sobre espacio físico de cuásares con \( z < 2.5 \)**.
 
----
+Con esto se espera que las comunidades encontradas compartan cualidades fisicas medibles en su fotometria.
+
 
 ## 📚 Objetivos científicos
 
@@ -16,22 +16,18 @@ El objetivo principal es investigar si existen **agrupamientos naturales en el e
 - Identificar posibles **subpoblaciones físicas emergentes**.
 - Establecer una base metodológica para comparaciones futuras (e.g. clustering clásico vs. redes).
 
----
-
 ## 🧭 Roadmap del proyecto
 
-| Fase | Tarea principal | Estado |
-|------|------------------|--------|
-| 0. Preparación | Estructura de carpetas + entorno reproducible | ⏳ |
-| 1. Preprocesamiento | Limpieza y selección de parámetros físicos | ⏳ |
-| 2. Construcción de red | Definición de nodos y aristas (kNN / ε) | ⏳ |
-| 3. Análisis topológico | Métricas, comunidades, embeddings | ⏳ |
-| 4. Interpretación física | Relación con propiedades astrofísicas | ⏳ |
-| 5. Redacción | Paper para envío a MNRAS / A&A / ApJ | ⏳ |
+| Fase                     | Tarea principal                               | Estado |
+| ---                      | ---                                           | ---    |
+| 0. Preparación           | Estructura de carpetas + entorno reproducible | [+]    |
+| 1. Preprocesamiento      | Limpieza y selección de parámetros físicos    | ⏳     |
+| 2. Construcción de red   | Definición de nodos y aristas (kNN / ε)       | []     |
+| 3. Análisis topológico   | Métricas, comunidades, embeddings             | []     |
+| 4. Interpretación física | Relación con propiedades astrofísicas         | []     |
+| 5. Redacción             | Paper para envío a MNRAS / A&A / ApJ          | []     |
 
 *El objetivo es tener un resultado publicable en un plazo estimado de 4–6 meses.*
-
----
 
 ## 📁 Estructura del repositorio
 
@@ -59,8 +55,6 @@ project/
 - [networkx](https://networkx.org/) o [igraph](https://igraph.org/python/) — análisis de redes  
 - [matplotlib](https://matplotlib.org/) / [seaborn](https://seaborn.pydata.org/) — visualización  
 - [UMAP](https://umap-learn.readthedocs.io/en/latest/) — reducción de dimensionalidad
-
----
 
 ## 🧪 Flujo de trabajo
 

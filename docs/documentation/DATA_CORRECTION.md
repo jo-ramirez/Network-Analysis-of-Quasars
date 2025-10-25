@@ -123,7 +123,7 @@ pero se puede aplicar $A_{W1}, A_{W2}$ de Yuan et al. (2013).
 
 > **Resultado:** todos los valores fotométricos están en el sistema **AB**, corregidos por extinción.
 
-## 3️⃣ Módulo de distancia $\mu(z)$
+## 3-. Módulo de distancia $\mu(z)$
 
 La relación entre magnitud aparente y absoluta depende del módulo de distancia:
 
@@ -145,7 +145,7 @@ $$
 
 *(Planck Collaboration 2018, A&A 641, A6).*
 
-## 4️⃣ K–correcciones $K_X(z)$
+## 4-. K–correcciones $K_X(z)$
 
 La K–corrección transforma la magnitud observada en la banda $X$
 al valor equivalente que tendría si el objeto estuviera en reposo ($z=0$).
