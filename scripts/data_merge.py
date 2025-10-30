@@ -8,7 +8,6 @@ def open_fits (filepath:str) -> list:
     with fits.open(filepath) as hdul:
         header = hdul[1].header
         data   = hdul[1].data
-
     return header, data
 
 def convert_to_little_endian(df):
