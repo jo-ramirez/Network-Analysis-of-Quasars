@@ -19,8 +19,8 @@ def mask_bad_ranges(lam, ranges):
         bad |= (lam >= _min) & (lam <= _max)
     return bad
 
-MIN_LAM_TARGET = 900.0      # ~ UV (FUV/NUV)
-MAX_LAM_TARGET = 60000.0    # ~ 6 micras (cubre WISE W1/W2)
+MIN_LAM_TARGET = 100.0      
+MAX_LAM_TARGET = 60000.0
 
 PROBLEMATIC_RANGES = [
     (0.0,     2000.0),
