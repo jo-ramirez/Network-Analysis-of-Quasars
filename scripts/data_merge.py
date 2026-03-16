@@ -21,6 +21,8 @@ if __name__ == "__main__":
     # Abrimos los .fits
     phot_header, phot_data = open_fits("data/raw/DR16Q_v4.fits")
 
+    print(phot_data.columns)
+
     # Generamos nuestros dataframes
     df_phot = pd.DataFrame({
         "SDSS_NAME": phot_data["SDSS"],
@@ -46,11 +48,11 @@ if __name__ == "__main__":
         "2h_mag": np.array(phot_data["hmag"]),   # mag (Vega)
         "2k_mag": np.array(phot_data["kmag"]),   # mag (Vega)
 
-        # flujos YJHK
-        "UY_FLUX": np.array(phot_data["FY"]),    # densidad de flujo (W m^-2 Hz^-1)
-        "UJ_FLUX": np.array(phot_data["FJ"]),    # densidad de flujo (W m^-2 Hz^-1)
-        "UH_FLUX": np.array(phot_data["FH"]),    # densidad de flujo (W m^-2 Hz^-1)
-        "UK_FLUX": np.array(phot_data["FK"]),    # densidad de flujo (W m^-2 Hz^-1)
+        # # flujos YJHK
+        # "UY_FLUX": np.array(phot_data["FY"]),    # densidad de flujo (W m^-2 Hz^-1)
+        # "UJ_FLUX": np.array(phot_data["FJ"]),    # densidad de flujo (W m^-2 Hz^-1)
+        # "UH_FLUX": np.array(phot_data["FH"]),    # densidad de flujo (W m^-2 Hz^-1)
+        # "UK_FLUX": np.array(phot_data["FK"]),    # densidad de flujo (W m^-2 Hz^-1)
 
         # WISE (IR medio) 
         "W1_mag": np.array(phot_data["W1mag"]),  # flujo (309.05nJy)
@@ -60,5 +62,31 @@ if __name__ == "__main__":
         "SN": np.array(phot_data["SNR"])
     })
 
+    df_spec = pd.DataFrame({
+        "SDSS_NAME": phot_data["SDSS"],
+
+        # ESPACIO
+        "RA" : phot_data["RAJ2000"],             # deg (J2000)
+        "DEC": phot_data["DEJ2000"],             # deg (J2000)
+        "Z"  : phot_data["z"],                   # adimensional
+
+        "Chi2PCA": np.array(phot_data["Chi2PCA"]),
+        "Chi2Ha": np.array(phot_data["Chi2Ha"]),
+        "Chi2Hb": np.array(phot_data["Chi2Hb"]),
+        "Chi2MgII": np.array(phot_data["Chi2MgII"]),
+        "Chi2CIII": np.array(phot_data["Chi2CIII"]),
+        "Chi2CIV": np.array(phot_data["Chi2CIV"]),
+        "Chi2LyA": np.array(phot_data["Chi2LyA"]),
+
+        "AI_CIV_": np.array(phot_data["AI_CIV_"]),
+        "BI_SIIV_": np.array(phot_data["BI_SIIV_"]),
+        "AI_SIIV_": np.array(phot_data["AI_SIIV_"]),
+
+        "F1_4p": np.array(phot_data["F1_4p"]),
+    })
+
     df_phot = convert_to_little_endian(df_phot).dropna()
     df_phot.to_csv("data/pre_processed/SDSS_DR16Q_phot.csv", index=False)
+
+    df_spec = convert_to_little_endian(df_spec).dropna()
+    df_spec.to_csv("data/pre_processed/SDSS_DR16Q_spec.csv", index=False)

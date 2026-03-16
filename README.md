@@ -1,100 +1,84 @@
-# 🕸️ Network Analysis of Quasars — SDSS DR16Q
+# Topología del Espacio Latente Fotométrico: Taxonomía No Supervisada de Cuásares
 
-Este proyecto explora la **estructura topológica en el espacio de parámetros físicos de cuásares** usando técnicas de análisis de redes, analisis de comunidades y analisis estadisticos clasicos. El objetivo principal es investigar si existen **agrupamientos naturales en comunidades sobre espacio físico de cuásares con \( z < 2.5 \)**.
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Status](https://img.shields.io/badge/status-research-blueviolet)
 
-Con esto se espera que las comunidades encontradas compartan cualidades fisicas medibles en su fotometria.
+## 📖 Abstract / Descripción
 
+Este proyecto presenta un pipeline de Machine Learning **completamente no supervisado** diseñado para el análisis topológico y la clasificación taxonómica de Cuásares (Núcleos Galácticos Activos - AGNs). Utilizando **exclusivamente datos fotométricos**, este repositorio demuestra que es posible redescubrir la taxonomía compleja de los AGNs (Radio-loud, Type 2, Red Quasars) y aislar poblaciones anómalas (como *Broad Absorption Line* o *Changing-State AGNs*).
 
-## 📚 Objetivos científicos
+A través del mapeo topológico y del espacio latente de sus colores fotométricos, el proyecto prescinde por completo de la necesidad de espectroscopía previa o etiquetas de entrenamiento, revelando eficazmente la estructura subyacente de la población de cuásares a partir del *manifold* de sus observaciones en múltiples bandas.
 
-- Construir un subconjunto bien definido del catálogo **SDSS DR16Q** (cuásares con \( z < 2.5 \), alto S/N).
-- Representar los objetos como nodos de una red basada en similitudes físicas.
-- Explorar la estructura topológica de la red:
-  - comunidades
-  - hubs y nodos puente
-  - modularidad y conectividad
-- Identificar posibles **subpoblaciones físicas emergentes**.
-- Establecer una base metodológica para comparaciones futuras (e.g. clustering clásico vs. redes).
+---
 
-## 🧭 Roadmap del proyecto
+## ⚙️ Arquitectura del Pipeline
 
-| Fase                     | Tarea principal                               | Estado |
-| ---                      | ---                                           | ---    |
-| 0. Preparación           | Estructura de carpetas + entorno reproducible | [+]    |
-| 1. Preprocesamiento      | Limpieza y selección de parámetros físicos    | ⏳     |
-| 2. Construcción de red   | Definición de nodos y aristas (kNN / ε)       | []     |
-| 3. Análisis topológico   | Métricas, comunidades, embeddings             | []     |
-| 4. Interpretación física | Relación con propiedades astrofísicas         | []     |
-| 5. Redacción             | Paper para envío a MNRAS / A&A / ApJ          | []     |
+El ciclo de vida del análisis se articula en tres etapas fundamentales:
 
-*El objetivo es tener un resultado publicable en un plazo estimado de 4–6 meses.*
+### 1. Preprocesamiento Físico
+- **K-Correction:** Cálculo de magnitudes absolutas aplicando una corrección basada en la interpolación de un espectro template al *rest-frame*. Esto resulta crucial para lidiar de forma robusta con la amplia dispersión temporal y de corrimiento al rojo (redshift, $z$).
+- **Imputación Inteligente:** Manejo físico-matemático de flujos fotométricos negativos o nulos para prevenir sesgos de supervivencia (*survival bias*), lo que de otra manera penalizaría enormemente y descartaría a las poblaciones originadas bajo fuerte oscurecimiento intrínseco.
+- **Transformación de Dimensionalidad:** Construcción del espacio original de características basado en índices de color.
 
-## 📁 Estructura del repositorio
+### 2. Modelado Topológico
+- **Reducción de Dimensionalidad (UMAP):** Proyección matemática utilizando el algoritmo *Uniform Manifold Approximation and Projection*. Se calibró específicamente con la métrica de Manhattan ($L_1$), confiriendo al modelo una **alta robustez estructural frente a outliers astrofísicos** extremos que abundan en los catálogos observacionales.
 
+### 3. Aprendizaje sobre Grafos (*Graph Learning*)
+- **Construcción del Grafo:** Formulación de un grafo de similitud k-NN, finamente ponderado mediante un Heat Kernel (Gaussiano) que promueve transiciones analíticas suaves en todo el manifold fotométrico.
+- **Clustering Topológico:** Implementación del Algoritmo de Leiden optimizado (a resolución topológica $r = 0.2$), estabilizando el tejido de datos subyacente.
+
+---
+
+## 🔬 Hallazgos y Resultados de Validación
+
+El modelo detectó convergencia estructural en **6 meso-estructuras estables** de la población astrofísica (con un global *Silhouette Score* $\approx 0.35$). Para comprobar su veracidad física, el particionado fue expuesto a un riguroso esquema de validación cruzada utilizando datos externos (emisión en radio, espectroscopía subyacente) provenientes del **catálogo SDSS DR16Q** (ej: contrastes con indicadores como `F1_4p`, `Chi2CIV`, `Chi2MgII`).
+
+El Pipeline no supervisado identificó con éxito:
+
+- **La Población Jet-Dominated:** Agrupó exitosamente a casi la totalidad de Blázares / FSRQs cuyas propiedades fotométricas estaban intrínsecamente dominadas por la potente emisión del jet no térmico.
+- **Oscurecidos & Red Quasars:** Aislamiento sin precedentes de la población atípica severamente afectada por extinción de las bandas ópticas y enrojecida debido a un exceso marcado de emisión térmica infrarroja (IR).
+- **Poblaciones de Cinemática Extrema:** Las comunidades lograron perfilar sub-poblaciones marginales compuestas por flujos absortivos masivos (como los Cuásares BAL), diagnosticadas empíricamente en el espacio no-supervisado como fallos catastróficos en correlaciones estelares estándar de ajustes.
+
+---
+
+## 📁 Estructura del Proyecto
+
+```text
+Network-Analysis-of-Quasars/
+├── data/                  # Datasets fotométricos, metadata y catálogos (SDSS DR16Q)
+├── docs/                  # Documentación teórica, diagramas y artículos de referencia
+├── notebooks/             # Workspace iterativo para EDA y modelamiento
+│   ├── photometric_cleaning.ipynb # Preprocesamiento físico (K-correction, imputación)
+│   └── topological_analysis.ipynb # Grafo k-NN, UMAP y Algoritmo de Leiden
+├── results/               # Salidas de clusters, métricas, gráficas y embeddings
+├── scripts/               # Scripts de ejecución modularizada
+│   └── data_merge.py      # Cruce posicional de tablas fotométricas/espectroscópicas
+├── venv/                  # Entorno virtual local (ignorado en git)
+├── requirements.txt       # Control de dependencias de Python
+└── README.md              # Este archivo
 ```
-project/
-├── data/
-│ ├── raw/ # Catálogos originales
-│ ├── processed/ # Subconjuntos limpios y normalizados
-├── notebooks/ # Exploración y análisis paso a paso
-├── scripts/ # Scripts modulares (preprocesamiento, red, métricas)
-├── results/
-│ ├── figures/ # Visualizaciones de red y embeddings
-│ ├── tables/ # Resultados numéricos y estadísticas
-├── docs/ # Notas técnicas y documentación adicional
-├── paper/ # Manuscrito y figuras finales
-├── README.md
-└── requirements.txt / environment.yml
+
+---
+
+## 🛠️ Instalación y Requisitos
+
+Para replicar el entorno de ejecución aislando los paquetes de análisis (como `umap-learn`, `igraph`, `leidenalg`, `astropy`, etc.):
+
+```bash
+# 1. Clonar este repositorio
+git clone https://github.com/tu-usuario/Network-Analysis-of-Quasars.git
+cd Network-Analysis-of-Quasars
+
+# 2. Crear y activar tu entorno virtual
+python -m venv venv
+
+# En Linux o macOS:
+source venv/bin/activate
+# En Windows:
+venv\Scripts\activate
+
+# 3. Instalar las dependencias exactas del proyecto
+pip install -r requirements.txt
 ```
-
-## 🧰 Stack tecnológico
-
-- **Python** 3.10+
-- [pandas](https://pandas.pydata.org/) · [numpy](https://numpy.org/) · [astropy](https://www.astropy.org/)  
-- [scikit-learn](https://scikit-learn.org/) — kNN, métricas, embeddings  
-- [networkx](https://networkx.org/) o [igraph](https://igraph.org/python/) — análisis de redes  
-- [matplotlib](https://matplotlib.org/) / [seaborn](https://seaborn.pydata.org/) — visualización  
-- [UMAP](https://umap-learn.readthedocs.io/en/latest/) — reducción de dimensionalidad
-
-## 🧪 Flujo de trabajo
-
-1. **Preprocesamiento**: Filtrado por redshift, SNR y limpieza de parámetros.  
-2. **Construcción de red**: Definición de nodos (cuásares) y aristas (similitud física).  
-3. **Análisis topológico**: Métricas de red, comunidades y estructura global.  
-4. **Interpretación física**: Relación entre propiedades astrofísicas y estructura de red.  
-5. **Publicación**: Redacción de manuscrito para revista científica.
-
-## 📊 Métricas y análisis planeados
-
-- **Topología global**: grado medio, clustering, modularidad.  
-- **Centralidades**: degree, betweenness, closeness.  
-- **Comunidades**: algoritmos Louvain / Leiden / Infomap.  
-- **Proyecciones**: UMAP, t-SNE, visualizaciones 2D coloreadas por comunidad.  
-- **Comparaciones**: distribución de parámetros físicos entre comunidades.
-
-## 📝 Próximos pasos
-
-- [ ] Descargar y limpiar SDSS DR16Q  
-- [ ] Definir subconjunto z < 2.5  
-- [ ] Implementar red kNN  
-- [ ] Calcular métricas de red  
-- [ ] Identificar comunidades y hubs  
-- [ ] Redactar manuscrito inicial
-
-## 🧑‍💻 Autoría
-
-- **Autor/a:** *Jose Miguel Ramirez*  
-- **Institución:** *Universidad De Concepcion*  
-- Contacto: *joramriez2020@udec.cl*
-
-## 🪪 Licencia
-
-Este proyecto se distribuye bajo licencia MIT.  
-Ver [LICENSE](LICENSE) para más detalles.
-
-##  Contribuciones
-
-¡Pull requests bienvenidas! Si quieres contribuir:
-- Abre un *issue* para sugerencias
-- Usa *branches* descriptivos
-- Documenta claramente tus cambios
