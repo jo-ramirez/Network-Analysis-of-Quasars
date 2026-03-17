@@ -21,8 +21,6 @@ if __name__ == "__main__":
     # Abrimos los .fits
     phot_header, phot_data = open_fits("data/raw/DR16Q_v4.fits")
 
-    print(phot_data.columns)
-
     # Generamos nuestros dataframes
     df_phot = pd.DataFrame({
         "SDSS_NAME": phot_data["SDSS"],
