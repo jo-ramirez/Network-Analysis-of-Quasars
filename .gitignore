@@ -33,7 +33,6 @@ dist/
 *.zip
 *.tar
 *.gz
-*.csv
 
 data/pre_processed/*.csv
 

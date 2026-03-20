@@ -20,6 +20,7 @@ def convert_to_little_endian(df):
 if __name__ == "__main__":
     # Abrimos los .fits
     phot_header, phot_data = open_fits("data/raw/DR16Q_v4.fits")
+    spec_header, spec_data = open_fits("data/raw/dr16q_prop_May01_2024.fits.gz")
 
     # Generamos nuestros dataframes
     df_phot = pd.DataFrame({
@@ -46,12 +47,6 @@ if __name__ == "__main__":
         "2h_mag": np.array(phot_data["hmag"]),   # mag (Vega)
         "2k_mag": np.array(phot_data["kmag"]),   # mag (Vega)
 
-        # # flujos YJHK
-        # "UY_FLUX": np.array(phot_data["FY"]),    # densidad de flujo (W m^-2 Hz^-1)
-        # "UJ_FLUX": np.array(phot_data["FJ"]),    # densidad de flujo (W m^-2 Hz^-1)
-        # "UH_FLUX": np.array(phot_data["FH"]),    # densidad de flujo (W m^-2 Hz^-1)
-        # "UK_FLUX": np.array(phot_data["FK"]),    # densidad de flujo (W m^-2 Hz^-1)
-
         # WISE (IR medio) 
         "W1_mag": np.array(phot_data["W1mag"]),  # flujo (309.05nJy)
         "W2_mag": np.array(phot_data["W2mag"]),  # flujo (167.66nJy)
@@ -61,30 +56,41 @@ if __name__ == "__main__":
     })
 
     df_spec = pd.DataFrame({
-        "SDSS_NAME": phot_data["SDSS"],
+        "SDSS_NAME": spec_data["SDSS_NAME"],
 
-        # ESPACIO
-        "RA" : phot_data["RAJ2000"],             # deg (J2000)
-        "DEC": phot_data["DEJ2000"],             # deg (J2000)
-        "Z"  : phot_data["z"],                   # adimensional
+        "RA" : spec_data["RA"],                  # deg (J2000)
+        "DEC": spec_data["DEC"],                 # deg (J2000)
+        "Z"  : spec_data["Z_DR16Q"],             # adimensional
 
-        "Chi2PCA": np.array(phot_data["Chi2PCA"]),
-        "Chi2Ha": np.array(phot_data["Chi2Ha"]),
-        "Chi2Hb": np.array(phot_data["Chi2Hb"]),
-        "Chi2MgII": np.array(phot_data["Chi2MgII"]),
-        "Chi2CIII": np.array(phot_data["Chi2CIII"]),
-        "Chi2CIV": np.array(phot_data["Chi2CIV"]),
-        "Chi2LyA": np.array(phot_data["Chi2LyA"]),
+        "FEII_OPT_EW":  spec_data["FEII_OPT_EW"],
+        "FEII_OPT_ERR": spec_data["FEII_OPT_EW_ERR"],
+        
+        "LOGLEDD_RATIO": spec_data["LOGLEDD_RATIO"],
 
-        "AI_CIV_": np.array(phot_data["AI_CIV_"]),
-        "BI_SIIV_": np.array(phot_data["BI_SIIV_"]),
-        "AI_SIIV_": np.array(phot_data["AI_SIIV_"]),
-
-        "F1_4p": np.array(phot_data["F1_4p"]),
+        "HBETA_BR_FWHM":     spec_data["HBETA_BR"][:, 4],
+        "HBETA_BR_EW":       spec_data["HBETA_BR"][:, 5],
+        "HBETA_BR_FWHM_ERR": spec_data["HBETA_BR_ERR"][:, 4],
+        
+        "OIII5007_FWHM": spec_data["OIII5007"][:, 4],
+        "OIII5007_EW": spec_data["OIII5007"][:, 5],
     })
 
     df_phot = convert_to_little_endian(df_phot).dropna()
-    df_phot.to_csv("data/pre_processed/SDSS_DR16Q_phot.csv", index=False)
-
     df_spec = convert_to_little_endian(df_spec).dropna()
+    
+    # Limpiamos los flags de error espectral
+    df_spec = df_spec.replace([0.0, -1.0], np.nan).dropna()
+
+    # Encontramos la intersección: los nombres que sobrevivieron en AMBOS dataframes
+    nombres_comunes = set(df_phot["SDSS_NAME"]).intersection(set(df_spec["SDSS_NAME"]))
+
+    # Filtramos ambos para que tengan solo los elementos comunes
+    df_phot = df_phot[df_phot["SDSS_NAME"].isin(nombres_comunes)]
+    df_spec = df_spec[df_spec["SDSS_NAME"].isin(nombres_comunes)]
+
+    # Ordenamos por nombre para garantizar que la fila 1 del phot sea la misma que la del spec
+    df_phot = df_phot.sort_values("SDSS_NAME").reset_index(drop=True)
+    df_spec = df_spec.sort_values("SDSS_NAME").reset_index(drop=True)
+
+    df_phot.to_csv("data/pre_processed/SDSS_DR16Q_phot.csv", index=False)
     df_spec.to_csv("data/pre_processed/SDSS_DR16Q_spec.csv", index=False)
