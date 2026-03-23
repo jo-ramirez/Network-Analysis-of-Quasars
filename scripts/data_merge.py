@@ -42,10 +42,10 @@ if __name__ == "__main__":
         "i_mag": np.array(phot_data["imag"]),   # mag (AB)
         "z_mag": np.array(phot_data["zmag"]),   # mag (AB)
 
-        # 2MASS (NIR) 
-        "2j_mag": np.array(phot_data["jmag"]),   # mag (Vega)
-        "2h_mag": np.array(phot_data["hmag"]),   # mag (Vega)
-        "2k_mag": np.array(phot_data["kmag"]),   # mag (Vega)
+        # 2MASS (NIR) - Corregido a mayúsculas
+        "2j_mag": np.array(phot_data["Jmag"]),   # mag (Vega)
+        "2h_mag": np.array(phot_data["Hmag"]),   # mag (Vega)
+        "2k_mag": np.array(phot_data["Kmag"]),   # mag (Vega)
 
         # WISE (IR medio) 
         "W1_mag": np.array(phot_data["W1mag"]),  # flujo (309.05nJy)
@@ -58,39 +58,36 @@ if __name__ == "__main__":
     df_spec = pd.DataFrame({
         "SDSS_NAME": spec_data["SDSS_NAME"],
 
-        "RA" : spec_data["RA"],                  # deg (J2000)
-        "DEC": spec_data["DEC"],                 # deg (J2000)
-        "Z"  : spec_data["Z_DR16Q"],             # adimensional
-
         "FEII_OPT_EW":  spec_data["FEII_OPT_EW"],
-        "FEII_OPT_ERR": spec_data["FEII_OPT_EW_ERR"],
-        
-        "LOGLEDD_RATIO": spec_data["LOGLEDD_RATIO"],
 
-        "HBETA_BR_FWHM":     spec_data["HBETA_BR"][:, 4],
-        "HBETA_BR_EW":       spec_data["HBETA_BR"][:, 5],
-        "HBETA_BR_FWHM_ERR": spec_data["HBETA_BR_ERR"][:, 4],
+        "HALPHA_BR_FWHM": spec_data["HALPHA_BR"][:, 4],
+        "HALPHA_BR_EW": spec_data["HALPHA_BR"][:, 5],
+
+        "HBETA_BR_FWHM": spec_data["HBETA_BR"][:, 4],
+        "HBETA_BR_EW": spec_data["HBETA_BR"][:, 5],
         
         "OIII5007_FWHM": spec_data["OIII5007"][:, 4],
         "OIII5007_EW": spec_data["OIII5007"][:, 5],
+
+        "NII6585_FWHM": spec_data["NII6585"][:, 4],
+        "NII6585_EW": spec_data["NII6585"][:, 5],
+
+        "SII6718_FWHM": spec_data["SII6718"][:, 4],
+        "SII6718_EW": spec_data["SII6718"][:, 5],
+
+        "MGII_BR_EW": spec_data["MGII_BR"][:, 5],
+        "MGII_BR_FWHM": spec_data["MGII_BR"][:, 4],
+
+        "CIV_EW": spec_data["CIV"][:, 5],
+        "CIV_FWHM": spec_data["CIV"][:, 4],
+
+        "LOGMBH": spec_data["LOGMBH"],
+        "LOGLBOL": spec_data["LOGLBOL"],
+        "LOGLEDD_RATIO": spec_data["LOGLEDD_RATIO"]
     })
 
     df_phot = convert_to_little_endian(df_phot).dropna()
     df_spec = convert_to_little_endian(df_spec).dropna()
-    
-    # Limpiamos los flags de error espectral
-    df_spec = df_spec.replace([0.0, -1.0], np.nan).dropna()
-
-    # Encontramos la intersección: los nombres que sobrevivieron en AMBOS dataframes
-    nombres_comunes = set(df_phot["SDSS_NAME"]).intersection(set(df_spec["SDSS_NAME"]))
-
-    # Filtramos ambos para que tengan solo los elementos comunes
-    df_phot = df_phot[df_phot["SDSS_NAME"].isin(nombres_comunes)]
-    df_spec = df_spec[df_spec["SDSS_NAME"].isin(nombres_comunes)]
-
-    # Ordenamos por nombre para garantizar que la fila 1 del phot sea la misma que la del spec
-    df_phot = df_phot.sort_values("SDSS_NAME").reset_index(drop=True)
-    df_spec = df_spec.sort_values("SDSS_NAME").reset_index(drop=True)
 
     df_phot.to_csv("data/pre_processed/SDSS_DR16Q_phot.csv", index=False)
     df_spec.to_csv("data/pre_processed/SDSS_DR16Q_spec.csv", index=False)

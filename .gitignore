@@ -60,6 +60,8 @@ paper/*.synctex.gz
 paper/*.toc
 paper/*.bbl
 paper/*.blg
+paper/*.docx
+
 
 # ===========================
 # 🔐 ARCHIVOS SENSIBLES
@@ -68,3 +70,6 @@ paper/*.blg
 *.env
 *.key
 *.json
+
+venv
+venv/*
