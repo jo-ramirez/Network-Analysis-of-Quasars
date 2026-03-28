@@ -48,7 +48,6 @@ Las pruebas no paramétricas globales de **Kruskal-Wallis** confirmaron diferenc
 - Cinemática del *Broad Line Region* (BLR): Anchuras equivalentes (EW) y FWHM de flujos iónicos masivos (`CIV`, `MgII`, `H-Beta`).
 
 El consecuente análisis *post-hoc* empleando la métrica computacional **Delta de Cliff ($|d|$)** expuso tamaños de efecto (effect sizes) inmensos entre ciertas comunidades segregadas, demostrando matemáticamente que la topología fotométrica descubierta está inequívocamente anclada a las variables fundamentales y termodinámicas del AGN.
----
 
 ## 📁 Estructura del Proyecto
 
